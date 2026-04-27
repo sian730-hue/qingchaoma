@@ -293,7 +293,7 @@ function OptionModal({item, onClose, onAddToCart}) {
               {item.sub&&<div style={{fontSize:12,color:C.dim,marginTop:3}}>{item.sub}</div>}
             </div>
             <div style={{textAlign:"right"}}>
-              <div style={{fontSize:22,fontWeight:900,color:meta.accent}}>${item.price}</div>
+              <div style={{fontSize:22,fontWeight:900,color:meta.accent}}>NT$ {item.price}</div>
               <button onClick={onClose} style={{background:"none",border:"none",color:C.dimmer,fontSize:22,cursor:"pointer",marginTop:6,display:"block",marginLeft:"auto"}}>✕</button>
             </div>
           </div>
@@ -355,7 +355,7 @@ function OptionModal({item, onClose, onAddToCart}) {
             <Sec title="超值加購" badge="可複選">
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 {ADD_ONS.map(a=>(
-                  <Chip key={a.name} label={`${a.name} +$${a.price}`}
+                  <Chip key={a.name} label={`${a.name} +NT$${a.price}`}
                     selected={addOns.some(x=>x.name===a.name)}
                     accent={C.gold} multi onClick={()=>toggleAddOn(a)}/>
                 ))}
@@ -369,7 +369,7 @@ function OptionModal({item, onClose, onAddToCart}) {
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 <Chip label="不升級" selected={!upgradeSoup} accent={C.dimmer} onClick={()=>setUpgradeSoup(null)}/>
                 {UPGRADE_SOUP.map(u=>(
-                  <Chip key={u.name} label={`${u.name} +$${u.price}`}
+                  <Chip key={u.name} label={`${u.name} +NT$${u.price}`}
                     selected={upgradeSoup?.name===u.name} accent={C.goldLight}
                     onClick={()=>setUpgradeSoup(upgradeSoup?.name===u.name?null:u)}/>
                 ))}
@@ -383,7 +383,7 @@ function OptionModal({item, onClose, onAddToCart}) {
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 <Chip label="不升級" selected={!upgradeStaple} accent={C.dimmer} onClick={()=>setUpgradeStaple(null)}/>
                 {UPGRADE_STAPLE.map(u=>(
-                  <Chip key={u.name} label={`${u.name} +$${u.price}`}
+                  <Chip key={u.name} label={`${u.name} +NT$${u.price}`}
                     selected={upgradeStaple?.name===u.name} accent={C.yellow}
                     onClick={()=>setUpgradeStaple(upgradeStaple?.name===u.name?null:u)}/>
                 ))}
@@ -574,7 +574,7 @@ function MainCard({item, onClick, cartCount}) {
         {cartCount>0&&(
           <div style={{background:meta.accent+"22",color:meta.accent,border:`1px solid ${meta.accent}44`,borderRadius:20,padding:"2px 8px",fontSize:12,fontWeight:700}}>×{cartCount}</div>
         )}
-        <div style={{fontSize:17,fontWeight:900,color:meta.accent}}>${item.price}</div>
+        <div style={{fontSize:17,fontWeight:900,color:meta.accent}}>NT$ {item.price}</div>
         <div style={{width:30,height:30,borderRadius:8,background:meta.accent+"22",border:`1px solid ${meta.accent}44`,display:"flex",alignItems:"center",justifyContent:"center",color:meta.accent,fontSize:18,fontWeight:700,flexShrink:0}}>＋</div>
       </div>
     </div>
@@ -592,7 +592,7 @@ function SimpleCard({item, onClick, cartCount}) {
       <div style={{fontSize:14,fontWeight:700,color:C.white}}>{item.name}</div>
       {item.sub&&<div style={{fontSize:11,color:C.dimmer,marginTop:2}}>{item.sub}</div>}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
-        <span style={{fontSize:15,fontWeight:900,color:meta.accent}}>${item.price}</span>
+        <span style={{fontSize:15,fontWeight:900,color:meta.accent}}>NT$ {item.price}</span>
         <div style={{
           width:26,height:26,borderRadius:7,
           background:cartCount>0?meta.accent+"22":C.green2,
