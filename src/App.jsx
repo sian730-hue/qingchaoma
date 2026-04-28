@@ -574,7 +574,7 @@ function MainCard({item, onClick, cartCount}) {
         {cartCount>0&&(
           <div style={{background:meta.accent+"22",color:meta.accent,border:`1px solid ${meta.accent}44`,borderRadius:20,padding:"2px 8px",fontSize:12,fontWeight:700}}>×{cartCount}</div>
         )}
-        <div style={{fontSize:17,fontWeight:900,color:meta.accent}}>NT$ {item.price}</div>
+        <div style={{fontSize:17,fontWeight:900,color:meta.accent}}><span translate="no">NT$</span> {item.price}</div>
         <div style={{width:30,height:30,borderRadius:8,background:meta.accent+"22",border:`1px solid ${meta.accent}44`,display:"flex",alignItems:"center",justifyContent:"center",color:meta.accent,fontSize:18,fontWeight:700,flexShrink:0}}>＋</div>
       </div>
     </div>
@@ -592,7 +592,7 @@ function SimpleCard({item, onClick, cartCount}) {
       <div style={{fontSize:14,fontWeight:700,color:C.white}}>{item.name}</div>
       {item.sub&&<div style={{fontSize:11,color:C.dimmer,marginTop:2}}>{item.sub}</div>}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
-        <span style={{fontSize:15,fontWeight:900,color:meta.accent}}>NT$ {item.price}</span>
+        <span style={{fontSize:15,fontWeight:900,color:meta.accent}}><span translate="no">NT$</span> {item.price}</span>
         <div style={{
           width:26,height:26,borderRadius:7,
           background:cartCount>0?meta.accent+"22":C.green2,
@@ -600,102 +600,6 @@ function SimpleCard({item, onClick, cartCount}) {
           display:"flex",alignItems:"center",justifyContent:"center",
           color:cartCount>0?meta.accent:C.gold,fontSize:15,fontWeight:700,
         }}>{cartCount>0?cartCount:"＋"}</div>
-      </div>
-    </div>
-  );
-}
-
-// ─── ADMIN PANEL ───────────────────────────────────────────────────────────────
-function AdminPanel({ waitTime, setWaitTime, isPaused, setIsPaused, onClose }) {
-  const presets = [5, 10, 15, 20, 30, 45];
-  return (
-    <div style={{ position:"fixed", inset:0, zIndex:300 }}>
-      <div onClick={onClose} style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.75)" }}/>
-      <div style={{
-        position:"absolute", bottom:0, left:0, right:0,
-        background:C.modalBg, borderRadius:"22px 22px 0 0",
-        border:`1px solid ${C.border}`,
-        boxShadow:"0 -8px 40px rgba(0,0,0,0.5)",
-      }}>
-        <div style={{ display:"flex", justifyContent:"center", padding:"12px 0 8px" }}>
-          <div style={{ width:36, height:4, borderRadius:2, background:C.border }}/>
-        </div>
-        <div style={{ padding:"0 20px 16px", borderBottom:`1px solid ${C.border}` }}>
-          <div style={{ fontSize:10, color:C.gold, letterSpacing:4, marginBottom:4 }}>STORE CONTROL</div>
-          <div style={{ fontSize:18, fontWeight:800, color:C.white }}>店家控制面板</div>
-        </div>
-        <div style={{ padding:"16px 20px 32px", display:"flex", flexDirection:"column", gap:16 }}>
-
-          {/* Pause toggle */}
-          <div style={{ background:C.cardBg, borderRadius:14, padding:"16px", border:`1px solid ${isPaused?"#a03818":C.border}` }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom: isPaused?12:0 }}>
-              <div>
-                <div style={{ fontSize:14, fontWeight:700, color:C.white }}>接單狀態</div>
-                <div style={{ fontSize:11, color:C.dim, marginTop:2 }}>
-                  {isPaused ? "目前暫停中，顧客無法送出訂單" : "目前正常接單中"}
-                </div>
-              </div>
-              <button onClick={()=>setIsPaused(p=>!p)} style={{
-                padding:"9px 18px", borderRadius:10, border:"none",
-                fontWeight:800, fontSize:13, cursor:"pointer",
-                background: isPaused ? `linear-gradient(135deg,${C.goldDark},${C.gold})` : "rgba(180,50,20,0.2)",
-                color: isPaused ? C.pageBg : "#e06040",
-                outline: isPaused ? "none" : `1.5px solid #a03818`,
-              }}>
-                {isPaused ? "▶ 恢復接單" : "⏸ 暫停接單"}
-              </button>
-            </div>
-            {isPaused && (
-              <div style={{ background:"rgba(180,50,20,0.14)", borderRadius:8, padding:"8px 12px", border:"1px solid rgba(180,50,20,0.3)" }}>
-                <div style={{ fontSize:11, color:"#e08060", lineHeight:1.7 }}>
-                  ⚠️ 暫停期間顧客看到「暫停接單」提示<br/>無法送出新訂單，現有訂單不受影響
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Wait time */}
-          <div style={{ background:C.cardBg, borderRadius:14, padding:"16px", border:`1px solid ${C.border}` }}>
-            <div style={{ fontSize:14, fontWeight:700, color:C.white, marginBottom:14 }}>等候時間設定</div>
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:20, marginBottom:16 }}>
-              <button onClick={()=>setWaitTime(t=>Math.max(5,t-5))} style={{
-                width:44, height:44, borderRadius:10,
-                background:C.green2, border:`1.5px solid ${C.border}`,
-                color:C.gold, fontSize:22, fontWeight:700, cursor:"pointer",
-              }}>－</button>
-              <div style={{ textAlign:"center", minWidth:80 }}>
-                <div style={{ fontSize:48, fontWeight:900, color:C.gold, lineHeight:1 }}>{waitTime}</div>
-                <div style={{ fontSize:12, color:C.dimmer, marginTop:2 }}>分鐘</div>
-              </div>
-              <button onClick={()=>setWaitTime(t=>Math.min(90,t+5))} style={{
-                width:44, height:44, borderRadius:10, border:"none",
-                background:`linear-gradient(135deg,${C.goldDark},${C.gold})`,
-                color:C.pageBg, fontSize:22, fontWeight:700, cursor:"pointer",
-              }}>＋</button>
-            </div>
-            <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
-              {presets.map(p=>(
-                <button key={p} onClick={()=>setWaitTime(p)} style={{
-                  flex:1, minWidth:44, padding:"8px 4px",
-                  background: waitTime===p ? C.gold+"28" : C.green2,
-                  border:`1.5px solid ${waitTime===p ? C.gold : C.border}`,
-                  borderRadius:9, color: waitTime===p ? C.gold : C.dim,
-                  fontSize:13, fontWeight: waitTime===p?700:400,
-                  cursor:"pointer", transition:"all 0.15s",
-                }}>{p}分</button>
-              ))}
-            </div>
-            <div style={{ fontSize:11, color:C.dimmer, marginTop:10, textAlign:"center" }}>
-              每次調整立即顯示給顧客
-            </div>
-          </div>
-
-          <button onClick={onClose} style={{
-            width:"100%", padding:"13px 0", background:"transparent",
-            border:`1.5px solid ${C.border}`, borderRadius:12,
-            color:C.dim, fontSize:14, cursor:"pointer",
-          }}>關閉</button>
-        </div>
       </div>
     </div>
   );
@@ -724,7 +628,6 @@ export default function App() {
   const [lastOrder,      setLastOrder]      = useState(null);
   const [waitTime,       setWaitTime]       = useState(15);
   const [isPaused,       setIsPaused]       = useState(false);
-  const [showAdmin,      setShowAdmin]      = useState(false);
   const [submitting,     setSubmitting]     = useState(false);
   const catRefs = useRef({});
 
@@ -818,9 +721,8 @@ export default function App() {
       <div style={{background:C.headerBg,borderBottom:`1px solid ${C.border}`,position:"sticky",top:0,zIndex:50}}>
         {/* Pause banner */}
         {isPaused && (
-          <div style={{ background:"rgba(180,50,20,0.9)", padding:"8px 20px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <span style={{ fontSize:13, fontWeight:700, color:"#ffe0d0" }}>⏸ 目前暫停接單中</span>
-            <button onClick={()=>setShowAdmin(true)} style={{ background:"rgba(255,255,255,0.15)", border:"none", borderRadius:6, color:"#ffe0d0", fontSize:11, padding:"4px 10px", cursor:"pointer" }}>調整</button>
+          <div style={{ background:"rgba(180,50,20,0.9)", padding:"8px 20px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <span style={{ fontSize:13, fontWeight:700, color:"#ffe0d0" }}>⏸ 目前暫停接單，請稍後再試</span>
           </div>
         )}
         <div style={{
@@ -845,15 +747,6 @@ export default function App() {
               </div>
               <div style={{fontSize:10,color:C.dimmer,marginTop:3}}>現場現金付款</div>
             </div>
-            {/* Gear button */}
-            <button onClick={()=>setShowAdmin(true)} style={{
-              background:C.green2, border:`1px solid ${C.border}`, borderRadius:8,
-              color:C.dim, fontSize:14, padding:"4px 8px", cursor:"pointer",
-              display:"flex", alignItems:"center", gap:4,
-            }}>
-              <span>⚙️</span>
-              <span style={{ fontSize:10 }}>店家</span>
-            </button>
           </div>
         </div>
 
@@ -954,15 +847,6 @@ export default function App() {
       {/* ── MODAL ── */}
       {selectedItem&&(
         <OptionModal item={selectedItem} onClose={()=>setSelectedItem(null)} onAddToCart={addToCart}/>
-      )}
-
-      {/* ── ADMIN PANEL ── */}
-      {showAdmin&&(
-        <AdminPanel
-          waitTime={waitTime} setWaitTime={setWaitTime}
-          isPaused={isPaused} setIsPaused={setIsPaused}
-          onClose={()=>setShowAdmin(false)}
-        />
       )}
     </div>
   );
